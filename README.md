@@ -1,3 +1,4 @@
+## backend-study-25-sns
 # SNS 게시판 서버 만들기
 사용자가 게시글을 작성, 조회, 수정, 삭제하는 기능(CRUD)을 구현한 Spring Boot 서버입니다.
 
@@ -66,3 +67,4 @@ com.apptivedev.sns
 - 상황에 따라 필요한 Annotation에 대해 조언을 받음.
 - Controller / Service / entity 등을 연결 할 때 햇갈리거나 몰랐던 부분에서 도움을 받음.
 - README의 업계 표준 양식을 받아서 그 것을 기반으로 README 작성
+
