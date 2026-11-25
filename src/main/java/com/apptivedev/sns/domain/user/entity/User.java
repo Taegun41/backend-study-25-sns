@@ -18,15 +18,15 @@ public class User {
     @Column(nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 10)
-    private String nickname;
+    @Column(nullable = false, length = 20)
+    private String name;
 
     @Column(nullable = false, length = 400)      //암호화를 대비해서 넉넉하게
     private String password;
 
-    public User(String email, String nickname, String password) {
+    public User(String email, String name, String password) {
         this.email = email;
-        this.nickname = nickname;
+        this.name = name;
         this.password = password;
     }
 }
