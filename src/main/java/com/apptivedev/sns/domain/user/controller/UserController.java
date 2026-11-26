@@ -3,6 +3,7 @@ package com.apptivedev.sns.domain.user.controller;
 import com.apptivedev.sns.domain.user.dto.UserResponse;
 import com.apptivedev.sns.domain.user.dto.UserUpdateRequest;
 import com.apptivedev.sns.domain.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public UserResponse userUpdate(@PathVariable("userId") Long userId, @RequestBody UserUpdateRequest request){
+    public UserResponse userUpdate(@PathVariable("userId") Long userId,@Valid @RequestBody UserUpdateRequest request){
         return userService.userUpdate(userId, request);
     }
 
