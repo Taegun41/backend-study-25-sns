@@ -33,5 +33,10 @@ public class UserService {
         return UserResponse.from(foundUser);
     }
 
+    @Transactional
+    public void userDelete(Long userId){
+        User foundUser = getUserOrThrow(userId);
+        userRepository.delete(foundUser);
+    }
 
 }

@@ -4,6 +4,7 @@ import com.apptivedev.sns.domain.user.dto.UserResponse;
 import com.apptivedev.sns.domain.user.dto.UserUpdateRequest;
 import com.apptivedev.sns.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor //생성자 주입
@@ -21,5 +22,11 @@ public class UserController {
     @PatchMapping("/{userId}")
     public UserResponse userUpdate(@PathVariable("userId") Long userId, @RequestBody UserUpdateRequest request){
         return userService.userUpdate(userId, request);
+    }
+
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void userDelete(@PathVariable("userId") Long userId){
+        userService.userDelete(userId);
     }
 }
