@@ -2,17 +2,16 @@ package com.apptivedev.sns.domain.post.service;
 
 import com.apptivedev.sns.domain.post.dto.PostCreateRequest;
 import com.apptivedev.sns.domain.post.dto.PostResponse;
+import com.apptivedev.sns.domain.post.dto.PostUpdateRequest;
 import com.apptivedev.sns.domain.post.entity.Post;
 import com.apptivedev.sns.domain.post.repository.PostRepository;
+import com.apptivedev.sns.global.exception.CustomException;
+import com.apptivedev.sns.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
-import com.apptivedev.sns.domain.post.dto.PostUpdateRequest;
 
 @RequiredArgsConstructor
 @Service
@@ -47,8 +46,8 @@ public class PostService {
 
     // id로 게시글을 찾고, 없으면 404 예외를 던진다 (단건 조회, 수정, 삭제에서 같이 사용)
     private Post getPostOrThrow(Long postId) {
-        return postRepository.findById(postId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."));
+        return postRepository.findById(postId).orElseThrow(
+                () -> new CustomException(ErrorCode.POST_NOT_FOUND));
     }
 
 
@@ -58,14 +57,14 @@ public class PostService {
     public PostResponse update(Long postId, PostUpdateRequest request) {
         // 규칙 1: 수정할 필드를 하나도 보내지 않으면 400
         if (request.title() == null && request.content() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정할 필드(title, content)를 하나 이상 보내야 합니다.");
+            throw new CustomException(ErrorCode.NO_UPDATE_FIELD);
         }
         // 규칙 2: 보낸 값이 빈 문자열이거나 공백만 있으면 400
         if (request.title() != null && request.title().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "제목은 빈 문자열이나 공백일 수 없습니다.");
+            throw new CustomException(ErrorCode.BLANK_POST_TITLE);
         }
         if (request.content() != null && request.content().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "내용은 빈 문자열이나 공백일 수 없습니다.");
+            throw new CustomException(ErrorCode.BLANK_POST_CONTENT);
         }
 
         Post post = getPostOrThrow(postId);     // DB에서 꺼냄 → JPA가 이 객체를 지켜봄 (없으면 404)
