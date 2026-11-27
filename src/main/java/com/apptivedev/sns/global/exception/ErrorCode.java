@@ -21,8 +21,10 @@ public enum ErrorCode {
 
     // Common
     INVALID_INPUT(HttpStatus.BAD_REQUEST,"C001", "잘못된 입력값입니다."),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"C999", "서버 내부 오류입니다.");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"C999", "서버 내부 오류입니다."),
 
+    //Auth(인증)
+    LOGIN_FAILED(HttpStatus.UNAUTHORIZED,"A001","이메일 혹은 비밀번호가 올바르지 않습니다.");
 
     private final HttpStatus httpStatus;   // 응답 상태 코드
     private final String code;             // 프론트엔드가 분기 처리에 쓰는 고유 코드
